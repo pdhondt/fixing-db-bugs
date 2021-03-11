@@ -6,10 +6,10 @@ $sports = ['Football', 'Tennis', 'Ping pong', 'Volley ball', 'Rugby', 'Horse rid
 function openConnection(): PDO
 {
     // No bugs in this function, just use the right credentials.
-    $dbhost = "DB_HOST";
-    $dbuser = "DB_USER";
-    $dbpass = "DB_USER_PASSWORD";
-    $db = "DB_NAME";
+    $dbhost = "localhost";
+    $dbuser = "becode";
+    $dbpass = "BeCode123#";
+    $db = "favoritesports";
 
     $driverOptions = [
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
@@ -21,6 +21,8 @@ function openConnection(): PDO
 }
 
 $pdo = openConnection();
+
+var_dump($pdo);
 
 if(!empty($_POST['firstname']) && !empty($_POST['lastname'])) {
     //@todo possible bug below?
