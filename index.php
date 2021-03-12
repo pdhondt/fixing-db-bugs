@@ -29,13 +29,13 @@ $pdo = openConnection();
 var_dump($pdo);
 
 if(!empty($_POST['firstname']) && !empty($_POST['lastname'])) {
-    //@todo possible bug below?
-    if(!empty($_POST['id'])) {
+    //@todo possible bug below? -> remove ! before empty because when id is not empty, we UPDATE the user.  When no id, INSERT new user
+    if(empty($_POST['id'])) {
         $handle = $pdo->prepare('INSERT INTO user (firstname, lastname, year) VALUES (:firstname, :lastname, :year)');
         $message = 'Your record has been added';
     } else {
-        //@todo why does this not work?
-        $handle = $pdo->prepare('UPDATE user VALUES (firstname = :firstname, lastname = :lastname, year = :year) WHERE id = :id');
+        //@todo why does this not work? -> change VALUES to SET
+        $handle = $pdo->prepare('UPDATE user SET (firstname = :firstname, lastname = :lastname, year = :year) WHERE id = :id');
         $handle->bindValue(':id', $_POST['id']);
         $message = 'Your record has been updated';
     }
@@ -74,7 +74,7 @@ elseif(isset($_POST['delete'])) {
     $message = 'Your record has been deleted';
 }
 
-//@todo Invalid query?
+//@todo Invalid query? -> change id to user.id
 $handle = $pdo->prepare('SELECT user.id, concat_ws(firstname, lastname, " ") AS name, sport FROM user LEFT JOIN sport ON user.id = sport.user_id where year = :year order by sport');
 $handle->bindValue(':year', date('Y'));
 $handle->execute();
