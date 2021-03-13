@@ -5,7 +5,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-$sports = ['Football', 'Tennis', 'Ping pong', 'Volley ball', 'Rugby', 'Horse riding', 'Swimming', 'Judo', 'Karate'];
+$sports = ['Cycling', 'Snowboarding', 'Dancing', 'Football', 'Tennis', 'Ping pong', 'Volley ball', 'Rugby', 'Horse riding', 'Swimming', 'Judo', 'Karate'];
 
 function openConnection(): PDO
 {
@@ -65,10 +65,10 @@ if(!empty($_POST['firstname']) && !empty($_POST['lastname'])) {
     }
 }
 elseif(isset($_POST['delete'])) {
-    //@todo BUG? Why does always delete all my users?
-    $handle = $pdo->prepare('DELETE FROM user');
+    //@todo BUG? Why does always delete all my users? --> specify id of the user to delete only the selected user
+    $handle = $pdo->prepare('DELETE FROM user WHERE id = :id');
     //The line below just gave me an error, probably not important. Annoying line.
-    //$handle->bindValue(':id', $_POST['id']);
+    $handle->bindValue(':id', $_POST['id']);
     $handle->execute();
 
     $message = 'Your record has been deleted';
