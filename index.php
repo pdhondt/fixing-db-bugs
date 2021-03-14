@@ -55,8 +55,10 @@ if(!empty($_POST['firstname']) && !empty($_POST['lastname'])) {
     }
 
     //@todo Why does this loop not work? If only I could see the bigger picture.
+    //moved $userId = $pdo->lastInsertId() outside of the foreach loop, otherwise the second iteration will use
+    //the id of the inserted sport from the first iteration instead of the id of the newly added user
+    $userId = $pdo->lastInsertId();
     foreach($_POST['sports'] AS $sport) {
-        $userId = $pdo->lastInsertId();
 
         $handle = $pdo->prepare('INSERT INTO sport (user_id, sport) VALUES (:userId, :sport)');
         $handle->bindValue(':userId', $userId);
