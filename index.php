@@ -76,8 +76,8 @@ elseif(isset($_POST['delete'])) {
     $message = 'Your record has been deleted';
 }
 
-//@todo Invalid query? -> change id to user.id
-$handle = $pdo->prepare('SELECT user.id, concat_ws(firstname, lastname, " ") AS name, sport FROM user LEFT JOIN sport ON user.id = sport.user_id where year = :year order by sport');
+//@todo Invalid query? -> change id to user.id and corrected concat_ws function (separator before expressions, not after)
+$handle = $pdo->prepare('SELECT user.id, concat_ws(" ", firstname, lastname) AS name, sport FROM user LEFT JOIN sport ON user.id = sport.user_id where year = :year order by sport');
 $handle->bindValue(':year', date('Y'));
 $handle->execute();
 $users = $handle->fetchAll();
