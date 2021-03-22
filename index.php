@@ -98,7 +98,8 @@ if(!empty($_GET['id'])) {
     $handle->bindValue(':id', $_GET['id']);
     $handle->execute();
     foreach($handle->fetchAll() AS $sport) {
-        $selectedUser['sports'][] = $sport;//@todo I just want an array of all sports of this, why is it not working?
+        $selectedUser['sports'][] = $sport['sport'];//@todo I just want an array of all sports of this, why is it not working?
+                //added ['sport'] after $sport in order to show the currently chosen sports for the selected user
     }
 }
 
